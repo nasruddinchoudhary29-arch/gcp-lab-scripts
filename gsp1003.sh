@@ -1,6 +1,14 @@
 #!/bin/bash
 # GSP1003 - Getting Started with Vault
 
+echo "=== Installing Vault CLI ==="
+sudo apt-get update -y
+sudo apt-get install -y unzip curl
+curl -fsSL https://releases.hashicorp.com/vault/1.14.2/vault_1.14.2_linux_amd64.zip -o vault.zip
+unzip vault.zip
+sudo mv vault /usr/local/bin/
+vault --version
+
 echo "=== Starting Vault Dev Server ==="
 vault server -dev > vault.log 2>&1 &
 sleep 5
@@ -40,4 +48,4 @@ vault write -f transit/keys/mykey
 echo "=== Encrypting sample text ==="
 vault write transit/encrypt/mykey plaintext=$(base64 <<< "SensitiveData")
 
-echo "=== Script completed. You can now use Vault UI at: $VAULT_ADDR ==="
+echo "=== Lab setup complete. Vault UI is available at $VAULT_ADDR ==="
