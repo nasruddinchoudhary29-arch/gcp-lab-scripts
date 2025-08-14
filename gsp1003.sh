@@ -9,12 +9,14 @@ unzip vault.zip
 sudo mv vault /usr/local/bin/
 vault --version
 
-echo "=== Starting Vault Dev Server ==="
-vault server -dev > vault.log 2>&1 &
+echo "=== Starting Vault Dev Server with fixed root token ==="
+export VAULT_DEV_ROOT_TOKEN_ID="root"
+vault server -dev -dev-root-token-id="$VAULT_DEV_ROOT_TOKEN_ID" > vault.log 2>&1 &
 sleep 5
 
 export VAULT_ADDR='http://127.0.0.1:8200'
-export VAULT_TOKEN="root"
+export VAULT_TOKEN="$VAULT_DEV_ROOT_TOKEN_ID"
+
 
 echo "=== Enabling key/value secrets engine ==="
 vault secrets enable -path=secret kv
@@ -49,3 +51,4 @@ echo "=== Encrypting sample text ==="
 vault write transit/encrypt/mykey plaintext=$(base64 <<< "SensitiveData")
 
 echo "=== Lab setup complete. Vault UI is available at $VAULT_ADDR ==="
+
