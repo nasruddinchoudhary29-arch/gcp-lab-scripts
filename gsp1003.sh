@@ -17,7 +17,6 @@ sleep 5
 export VAULT_ADDR='http://127.0.0.1:8200'
 export VAULT_TOKEN="$VAULT_DEV_ROOT_TOKEN_ID"
 
-
 echo "=== Enabling key/value secrets engine ==="
 vault secrets enable -path=secret kv
 
@@ -51,4 +50,3 @@ echo "=== Encrypting sample text ==="
 vault write transit/encrypt/mykey plaintext=$(base64 <<< "SensitiveData")
 
 echo "=== Lab setup complete. Vault UI is available at $VAULT_ADDR ==="
-
