@@ -11,7 +11,7 @@ IFS=$'\n\t'
 # - prompts user when UI interaction is required
 
 # ---- Config ----
-VAULT_DEV_TOKEN="root"
+export VAULT_DEV_ROOT_TOKEN_ID="$(openssl rand -hex 16)"
 SCRIPT_NAME="$(basename "$0")"
 
 # ---- Helpers ----
@@ -162,3 +162,4 @@ fi
 info "All done. Vault UI is available via Cloud Shell web preview on port 8200 (preview -> change port -> 8200)."
 info "Root token: $VAULT_TOKEN"
 info "Secret saved to: $SAVED_FILE and uploaded to: ${GOT_BUCKET:-<not uploaded>}"
+
